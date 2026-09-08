@@ -16,6 +16,8 @@
 
 **[下载芝麻酥·吃粮版](https://github.com/Christinesbt/blade-cat/raw/refs/heads/main/downloads/zhimasu-eating.zip)**：闲置时低头吃两口，再抬头。它是独立宠物，可以与蹲坐版同时安装，在宠物列表中切换。
 
+吃粮版已优化过渡：保持低蹲，在碗边小幅点头，减少大幅起身带来的跳变。原生闲置仍受六帧和固定播放时长限制；预览 GIF 使用相同节奏。
+
 ![吃猫粮](previews/eating.gif)
 
 1. 下载并解压 ZIP，得到 `zhimasu` 文件夹。
