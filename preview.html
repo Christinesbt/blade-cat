@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>芝麻酥 · 动作小剧场</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f6f3ed;color:#293c50;font:16px/1.7 system-ui,sans-serif}main{max-width:800px;margin:44px auto;padding:0 24px}h1{margin-bottom:6px;font-size:30px}p{color:#647180}nav{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}button{font:inherit;border:1px solid #ced6db;background:white;color:#293c50;border-radius:30px;padding:8px 18px;cursor:pointer}button[aria-pressed=true]{background:#344e64;color:white;border-color:#344e64}#stage{height:420px;position:relative;background:#e7edf1;border-radius:28px;overflow:hidden;touch-action:none}canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:192px;height:208px}#hint{text-align:center;position:absolute;bottom:18px;width:100%;font-size:14px;color:#647180}.note{font-size:14px}a{color:#365e79}
+</style>
+<main>
+<h1>芝麻酥的动作小剧场</h1>
+<p>选一个动作，陪猫猫玩一会儿。</p>
+<nav aria-label="选择动作">
+<button data-mode="look" aria-pressed="true">看鼠标</button>
+<button data-mode="eat" aria-pressed="false">吃猫粮</button>
+<button data-mode="idle" aria-pressed="false">安静蹲坐</button>
+<button data-mode="work" aria-pressed="false">敲键盘</button>
+<button data-mode="done" aria-pressed="false">摇尾巴</button>
+</nav>
+<div id="stage"><canvas width="192" height="208" aria-label="芝麻酥动作预览"></canvas><div id="hint">在这片区域移动鼠标，猫猫会转头看你。</div></div>
+<p class="note">这是互动预览页。Codex 内的触发方式由应用控制；当前版本不会持续跟随普通桌面鼠标。下载整个仓库后打开本页即可使用，无需联网。</p>
+<a href="README.md">安装说明</a>
+</main>
+<script>
+const normal=new Image(), eating=new Image();
+normal.src='zhimasu/spritesheet.webp'; eating.src='zhimasu-eating/spritesheet.webp';
+const stage=document.querySelector('#stage'), canvas=document.querySelector('canvas'), ctx=canvas.getContext('2d'), hint=document.querySelector('#hint');
+let mode='look', start=performance.now(), direction=null;
+const idleTimes=[1680,660,660,840,840,1920];
+const messages={look:'在这片区域移动鼠标，猫猫会转头看你。',eat:'低头吃两口，再抬头看看。',idle:'安静陪着你。',work:'认真敲键盘中。',done:'完成啦，摇摇尾巴！'};
+document.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.mode;start=performance.now();document.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));hint.textContent=messages[mode]}));
+stage.addEventListener('pointermove',event=>{const box=canvas.getBoundingClientRect();const dx=event.clientX-box.left-box.width/2,dy=event.clientY-box.top-box.height*.3;direction=Math.hypot(dx,dy)<25?null:Math.round(((Math.atan2(dx,-dy)*180/Math.PI+360)%360)/22.5)%16});
+stage.addEventListener('pointerleave',()=>{direction=null});
+function tick(now){let row=0,column=0,img=normal;
+if(mode==='look'){row=direction===null?0:9+Math.floor(direction/8);column=direction===null?6:direction%8}
+else {if(mode==='eat')img=eating;if(mode==='work')row=7;if(mode==='done')row=8;
+const durations=row===0?idleTimes:(row===7?[120,120,120,120,120,220]:[150,150,150,150,150,280]);let t=(now-start)%durations.reduce((a,b)=>a+b,0);while(column<5&&t>=durations[column])t-=durations[column++];}
+ctx.clearRect(0,0,192,208);if(img.complete&&img.naturalWidth)ctx.drawImage(img,column*192,row*208,192,208,0,0,192,208);requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+</script>
+</html>

@@ -14,6 +14,10 @@
 
 **[下载芝麻酥安装包](https://github.com/Christinesbt/blade-cat/raw/refs/heads/main/downloads/zhimasu.zip)**
 
+**[下载芝麻酥·吃粮版](https://github.com/Christinesbt/blade-cat/raw/refs/heads/main/downloads/zhimasu-eating.zip)**：闲置时低头吃两口，再抬头。它是独立宠物，可以与蹲坐版同时安装，在宠物列表中切换。
+
+![吃猫粮](previews/eating.gif)
+
 1. 下载并解压 ZIP，得到 `zhimasu` 文件夹。
 2. 将整个文件夹放到 Codex 的 `pets` 目录中：
    - Windows：`%USERPROFILE%\.codex\pets\`
@@ -31,6 +35,14 @@ pets/
 
 也可以通过仓库页面的 **Code → Download ZIP** 下载整个仓库，再复制其中的 `zhimasu` 文件夹。
 
+吃粮版按同样步骤安装 `zhimasu-eating` 文件夹，在列表中选择「芝麻酥·吃粮版」。不用覆盖原版。两版都包含相同的工作、完成、等待和 16 向注视素材。
+
+## 看鼠标与互动预览
+
+下载整个仓库后，用浏览器打开 `preview.html`，选择「看鼠标」并移动指针即可测试；也能切换查看吃粮、蹲坐、敲键盘和摇尾巴。
+
+宠物包已包含 16 向注视素材，但素材不等于原生鼠标跟随功能。制作时核对的 Codex `26.901.6511.0` 将注视目标接到输入框光标或电脑操作光标，未接到普通桌面鼠标的持续移动，`pet.json` 也没有启用开关。互动预览页可以跟随鼠标，不会改变 Codex 的行为。
+
 ## 动作
 
 - 默认闲置：安静蹲坐、眨眼和轻微呼吸。
@@ -39,7 +51,7 @@ pets/
 - 等待回应：轻抬前爪，保留两侧后腿。
 - 其他：左右小跑、打招呼、跳跃、低落，以及 16 个方向的注视。
 
-吃猫粮暂留作后续动作，当前版本不包含。
+吃猫粮在独立吃粮版的闲置循环中提供，蹲坐版保留原来的安静闲置。
 
 GIF 展示动作素材；实际触发、播放次数和鼠标交互由 Codex 控制。本包不修改应用程序。制作时核对的 Windows 版本为 `26.901.6511.0`：工作与完成提示动作播放三轮后回到闲置，不会持续整个任务。其他版本的行为可能不同。
 
@@ -47,6 +59,8 @@ GIF 展示动作素材；实际触发、播放次数和鼠标交互由 Codex 控
 
 - `zhimasu/`：安装所需的两个文件。
 - `downloads/zhimasu.zip`：相同文件的便携安装包。
+- `zhimasu-eating/` 与 `downloads/zhimasu-eating.zip`：独立吃粮版及安装包。
+- `preview.html`：离线鼠标跟随与动作预览。
 - `previews/`：九组动作与注视预览。
 - `SHA256SUMS`：安装文件与 ZIP 的 SHA-256 校验值。
 
